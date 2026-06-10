@@ -9,13 +9,13 @@
 #
 # See https://github.com/rubocop-hq/rubocop/blob/master/manual/configuration.md
 #
-require:
+plugins:
   - rubocop-rake
   # - rubocop-rspec
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.2
   Exclude:
     - tmp/**/*
     - vendor/**/*
@@ -25,6 +25,9 @@ Style/FrozenStringLiteralComment:
 Naming/FileName:
   Exclude:
     - lib/flatware-*.rb
+Naming/PredicateMethod:
+  Exclude:
+    - lib/flatware/sink.rb
 Style/Documentation:
   Enabled: false
 Metrics/BlockLength:

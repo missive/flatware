@@ -5,13 +5,13 @@ gemspec name: 'flatware-cucumber'
 
 group :development do
   gem 'appraisal'
-  gem 'aruba', '~> 0.14'
+  gem 'aruba'
   gem 'logger'
   gem 'ostruct'
   gem 'pry'
   gem 'racc'
   gem 'rake'
-  gem 'rubocop'
+  gem 'rubocop', '>= 1.84.0'
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
 end

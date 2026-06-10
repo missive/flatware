@@ -6,9 +6,10 @@ module Flatware
   module RSpec
     # groups spec files into one job per worker.
     # reads from persisted example statuses, if available,
-    # and attempts to ballence the jobs accordingly.
+    # and attempts to balance the jobs accordingly.
     class FileJobBuilder
       extend Forwardable
+
       attr_reader :args, :workers, :configuration
 
       def_delegators(
@@ -54,12 +55,12 @@ module Flatware
         files_to_run
           .map(&method(:normalize_path))
           .reduce([[], []]) do |(timed, untimed), file|
-          if (time = seconds_per_file[file])
-            [timed + [[file, time]], untimed]
-          else
-            [timed, untimed + [file]]
+            if (time = seconds_per_file[file])
+              [timed + [[file, time]], untimed]
+            else
+              [timed, untimed + [file]]
+            end
           end
-        end
       end
 
       def normalize_path(path)
@@ -73,15 +74,16 @@ module Flatware
       end
 
       def sum_seconds(statuses)
-        statuses.select(&passing)
-                .map { |example| parse_example(**example) }
-                .reduce({}) do |times, example|
-          times.merge(
-            example.fetch(:file_name) => example.fetch(:seconds)
-          ) do |_, old = 0, new|
-            old + new
+        statuses
+          .select(&passing)
+          .map { |example| parse_example(**example) }
+          .reduce({}) do |times, example|
+            times.merge(
+              example.fetch(:file_name) => example.fetch(:seconds)
+            ) do |_, old = 0, new|
+              old + new
+            end
           end
-        end
       end
 
       def passing
@@ -109,10 +111,10 @@ module Flatware
             .sort_by(&block)
             .reverse
             .each do |entry|
-            groups.min_by do |group|
-              group.map(&block).reduce(:+) || 0
-            end.push(entry)
-          end
+              groups.min_by do |group|
+                group.map(&block).reduce(:+) || 0
+              end.push(entry)
+            end
         end
       end
     end

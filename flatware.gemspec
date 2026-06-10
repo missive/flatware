@@ -26,10 +26,12 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/briandunn/flatware'
 
   s.licenses = ['MIT']
-  s.required_ruby_version = ['>= 2.6', '< 3.5']
+  s.required_ruby_version = ['>= 3.2', '< 4.1']
   s.require_paths = ['lib']
   s.executables = ['flatware']
+  s.add_dependency %(benchmark)
   s.add_dependency %(drb)
+  s.add_dependency %(logger)
   s.add_dependency %(thor), '< 2.0'
   # s.metadata['rubygems_mfa_required'] = 'true'
 end
